@@ -1,85 +1,85 @@
 class Good {
     constructor(id, code, name, description, sizes, price, available) {
-        this.id = id
-        this.code = code
-        this.name = name
-        this.description = description
-        this.sizes = sizes
-        this.price = price
-        this.available = available
+      this.id = id
+      this.code = code
+      this.name = name
+      this.description = description
+      this.sizes = sizes
+      this.price = price
+      this.available = available
     }
-
+    
     setAvailable(available) {
-        this.available = available
+      this.available = available
     }
-}
-
-class GoodsList {
+  }
+  
+  class GoodsList {
     #goods = []
     filter = null
     sortPrice = false
     sortDir = true
-
+   
     get list() {
-        const filteredGoods = this.#goods.filter(good => this.filter ? this.filter.test(good.name) : true)
-        const sortedGoods = this.sortPrice ? filteredGoods.sort((a, b) => this.sort.Dir ? a.price - b.price : b.price - a.price) : filteredGoods
-        return sortedGoods.filter(good => good.available)
+      const filteredGoods = this.#goods.filter(good => this.filter ? this.filter.test(good.name) : true)
+      const sortedGoods = this.sortPrice ? filteredGoods.sort((a, b) => this.sortDir ? a.price - b.price : b.price - a.price) : filteredGoods
+      return sortedGoods.filter(good => good.available)
     }
-
+  
     add(good) {
-        this.#goods.push(good)
+      this.#goods.push(good)
     }
-
+  
     remove(id) {
-        this.#goods = this.#goods.filter(good => good.id != id)
+      this.#goods = this.#goods.filter(good => good.id !== id)
     }
-}
-
-class BasketGood extends Good {
+  }
+  
+  class BasketGood extends Good {
     constructor(good, amount) {
-        super(good.id, good.code, good.name, good.description, good.sizes, good.price, good.available)
-        this.amount = amount
+      super(good.id, good.code, good.name, good.description, good.sizes, good.price, good.available)
+      this.amount = amount
     }
-}
-
-class Basket {
+  }
+  
+  class Basket {
     goods = []
-
+  
     get totalAmount() {
-        return this.goods.reduce((total, good) => total + good.amount * good.price, 0)
+      return this.goods.reduce((total, good) => total + good.amount * good.price, 0)
     }
-
+  
     get totalSum() {
-        return this.goods.reduce((total, good) => total + good.amount, 0)
+      return this.goods.reduce((total, good) => total + good.amount, 0)
     }
-
+  
     add(good, amount) {
-        const existingGood = this.goods.find(g => g.id === good.id)
-        if (existingGood) {
-            existingGood.amount += amount
-        } else {
-            this.goods.push(new BasketGood(good, amount))
-        }
+      const existingGood = this.goods.find(g => g.id === good.id)
+      if (existingGood) {
+        existingGood.amount += amount
+      } else {
+        this.goods.push(new BasketGood(good, amount))
+      }
     }
-
+  
     remove(good, amount) {
-        const existingGood = this.goods.find(g => g.id === good.id)
-        if (existingGood) {
-            existingGood.amount -= amount
-            if (existingGood.amount <= 0) {
-                this.goods = this.goods.filter(g => g.id !== good.id)
-            }
+      const existingGood = this.goods.find(g => g.id === good.id)
+      if (existingGood) {
+        existingGood.amount -= amount
+        if (existingGood.amount <= 0) {
+          this.goods = this.goods.filter(g => g.id !== good.id)
         }
+      }
     }
-
+  
     clear() {
-        this.goods = []
+      this.goods = []
     }
-
+  
     removeUnavailable() {
-        this.goods = this.goods.filter(good => good.available)
+      this.goods = this.goods.filter(good => good.available)
     }
-}
+  }
 
 // create some Good instances
 const good1 = new Good(1, 'P001', 'Product 1', 'Product 1 description', ['S', 'M', 'L'], 10, true)
@@ -99,7 +99,7 @@ goodsList.add(good4)
 goodsList.add(good5)
 
 // Setting filter and sorting conditions
-goodsList.filter = /Hoodie/
+goodsList.filter = /1/
 goodsList.sortPrice = true
 goodsList.sortDir = false
 
